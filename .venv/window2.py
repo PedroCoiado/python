@@ -47,10 +47,57 @@ class Window2(QWidget):
         # Nome completo, isso indica ao usuário que ele deve escrever o nome em uma caixa
         # de texto a frente, Geralmente, uma label é usada em combinação uma caixa texto 
         # (QLineEdit)
-        self.label_name = QLabel("Nome completo:")
+        self.label_name = QLabel("Nome completo: ")
+        # Para fazer a formatação o estilo do texto da label, usamos os comando de
+        # CSS(Cascade STyle Sheet(Folha de estilo em cascata))
+        # com tais as propriedades obtidas:
+        # - color -> cor da letra(cor da frente)
+        # - font-size -> tamnho da letra, Que pode ser medida em pt(pontos)
+        # - font-weight -> peso da fonte(negrito: bold)
+        # - text-transform -> altera a altura da caixa(letra):
+                # UpperCase -> Maiúscula
+                # LowerCAse -> Minúscula
+                # Captalize -> Primeira letra de cada palavra Maíuscula
+        self.label_name.setStyleSheet("QLabel{color:#440303; font-size:12pt;font-weight:bold;text-transform:upperCase}")
+
+
+        self.label_email = QLabel("E-Mail: ")
+        self.label_cpf = QLabel("CPF: ")
+        self.label_sexo = QLabel("Sexo: ")
+        self.label_idade = QLabel("Idade:")
 
         # Adicionar uma caixa de texto
         self.edit_name = QLineEdit()
+        # Aplicação do estilo para caixa de texto:
+        # backgroud-color -> cor de fundo
+        # padding -> margem interna, ou seja, dentro da caixa
+        # border-radius -> arredondar os cantos da caixa de texto
+        self.edit_name.setStyleSheet("QLineEdit{background-color:#000; color:#fff; padding:10px; border-radius:10px}")
+        self.edit_email = QLineEdit()
+        self.edit_cpf = QLineEdit()
+
+        # Adicionar combobox
+        self.combo_sexo = QComboBox()
+        self.combo_idade = QComboBox()
+
+        # Criar uma lista com 2 sexos ou não prefiro dizer
+        lst_sexo = [ "----------", "Masculino", "Feminino", "Prefiro não dizer"]
+        # Adicionar  a lista a combo_sexo
+        self.combo_sexo.addItems(lst_sexo)
+
+        # Criar uma lista para o combo_idade que vai de 16 à 100
+        lst_idade = []
+        # Para popular a caixa da idade(combobox) da idade com valores 
+        # de 16 à 100, estamos usando uma esturuta de 
+        # repetição que daz uma contagem 16 à 101 com o comando range.
+        # Durante a contagem, cada número é convertido para string,
+        # pois a comboBox só aceita lsta de valores em
+        # Formato de Texto(string)
+        for i in range(16,101):
+            lst_idade.append(str(i))
+        self.combo_idade.addItems(lst_idade)
+
+
 
         # Adicionar layout para organizar os elementos
         # Estamos usando o gerenciador de layout vertical(QVBoxlayout)
@@ -66,11 +113,32 @@ class Window2(QWidget):
         layout.addWidget(self.label_name)
         layout.addWidget(self.edit_name)
 
+        layout.addWidget(self.label_email)
+        layout.addWidget(self.edit_email)
+
+        layout.addWidget(self.label_cpf)
+        layout.addWidget(self.edit_cpf)
+
+        layout.addWidget(self.label_sexo)
+        layout.addWidget(self.combo_sexo)
+        
+        layout.addWidget(self.label_idade)
+        layout.addWidget(self.combo_idade)
+                                               
+
         #Adicionar o layout a tela
         self.setLayout(layout)
 
+# Criando um objeto chamado app do QApplication (Responsável por todo o comportamento
+# da nossa aplicação). O argumento sys.argv: Informar ao sistema operacional que uma
+# aplicação será carregada e estará presente em memória
+
 app = QApplication(sys.argv)
+# Inicia a tela, ou seja, carrega a janela em memória
 win = Window2()
+# exibe a janela em tela
 # = Window2 é a classe (class)
-win.show() 
+win.show()
+# O comando app.exec_, executa todos os comandos acima e gerencia o botão de fechar
+# para retirar a janela de memória quando for acionado.
 app.exec()
